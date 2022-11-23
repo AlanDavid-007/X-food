@@ -6,6 +6,8 @@ import COLORS from '../../consts/colors';
 import {View} from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import CartScreen from '../screens/CartScreen';
+import WishListScreen from '../screens/WishListScreen';
+import ComingSoonScreen from '../screens/ComingSoonScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,7 +34,7 @@ const BottomNavigator = () => {
       />
       <Tab.Screen
         name="LocalMall"
-        component={HomeScreen}
+        component={ComingSoonScreen}
         options={{
           tabBarIcon: ({color}) => (
             <Icon name="local-mall" color={color} size={28} />
@@ -64,7 +66,7 @@ const BottomNavigator = () => {
       />
       <Tab.Screen
         name="Favorite"
-        component={HomeScreen}
+        component={WishListScreen}
         options={{
           tabBarIcon: ({color}) => (
             <Icon name="favorite" color={color} size={28} />
