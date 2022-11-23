@@ -21,7 +21,7 @@ import foods from '../../consts/foods';
 const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 
-const HomeScreen = ({navigation}) => {
+const WishlistScreen = ({navigation}) => {
   const [selectedWishIndex, setSelectedWishIndex] = React.useState(0);
 
   const ListWishes = () => {
@@ -45,7 +45,7 @@ const HomeScreen = ({navigation}) => {
               }}>
               <View style={style.categoryBtnImgCon}>
                 <Image
-                  source={category.image}
+                  source={wish.image}
                   style={{height: 35, width: 35, resizeMode: 'cover'}}
                 />
               </View>
@@ -217,4 +217,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default WishListScreen;
