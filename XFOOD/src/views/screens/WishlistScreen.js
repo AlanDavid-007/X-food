@@ -20,17 +20,54 @@ import wishlist from '../../consts/wishlist';
 import foods from '../../consts/foods';
 const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
+import wishlist from '../../consts/wishlist';
+
+//Async storage
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
 
 const WishlistScreen = ({navigation}) => {
   const [selectedWishIndex, setSelectedWishIndex] = React.useState(0);
 
+  const [ready, setReady] = useState(false);
+  const [addWish, setAddWish] = useState([wishlist]);
+  
+  
+    const AddWishes = (wish) {
+    const newWishes = [...wishlist, wish];
+    
+    AsyncStorage.setItem("storedWishes", JSON.stringify(newWishes)).then(() => {
+            setAddWish(newWishes);
+            setModalVisible(false);
+        }).catch((error) => console.log(error));
+            console.log(setAddWish(newWishes));
+  
+  };
+  
+  const loadWishes = () => {
+      AsyncStorage.getItem("storedWishes").then(data => {
+        if (data !== null) {
+          setWishes(JSON.parse(data))
+        }
+      }).catch((error) => console.log(error));
+    }
+
+    if (!ready) {
+      return (
+        <AppLoading
+          startAsync={loadWishes}
+          onFinish={() => setReady(true)}
+          onError={console.warn}
+        />
+      )
+    }
   const ListWishes = () => {
     return (
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={style.categoriesListContainer}>
-        {wishes.map((wish, index) => (
+        {wishlist.map((wish, index) => (
           <TouchableOpacity
             key={index}
             activeOpacity={0.8}
@@ -59,7 +96,7 @@ const WishlistScreen = ({navigation}) => {
                       ? COLORS.white
                       : COLORS.primary,
                 }}>
-                {eish.name}
+                {wish.name}
               </Text>
             </View>
           </TouchableOpacity>
@@ -217,4 +254,5 @@ const style = StyleSheet.create({
   },
 });
 
+export default AddWishes;
 export default WishListScreen;
