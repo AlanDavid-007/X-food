@@ -23,16 +23,9 @@ const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 import { v4 as uuidv4 } from 'uuid';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({navigation, item}) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
-
-  const Submit = () => {
-    AddCartItems({
-      id: uuidv4(),
-      name: categoriesValue.name,
-      image: categoriesValue.image,
-    })
-  };
+  
  const [categoriesValue, setCategoriesValue] = useState("");
   const ListCategories = () => {
     return (
@@ -54,7 +47,7 @@ const HomeScreen = ({navigation}) => {
                     : COLORS.secondary,
                 ...style.categoryBtn,
               }}>
-             <TouchableOpacity onPress={() => Submit()}>
+             <TouchableOpacity>
               <View style={style.categoryBtnImgCon}>
                 <Image
                   source={category.image}
@@ -81,6 +74,15 @@ const HomeScreen = ({navigation}) => {
     );
   };
   const Card = ({food}) => {
+      const Submit = () => {
+        AddCartItems({
+          id: uuidv4(),
+          name: food.name,
+          image: food.image,
+          ingredients: food.ingredients,
+          price: food.price,
+        })
+      };
     return (
       <TouchableHighlight
         underlayColor={COLORS.white}
@@ -106,9 +108,11 @@ const HomeScreen = ({navigation}) => {
             <Text style={{fontSize: 18, fontWeight: 'bold'}}>
               ${food.price}
             </Text>
+          <TouchableOpacity onPress={() => Submit()}
             <View style={style.addToCartBtn}>
               <Icon name="add" size={20} color={COLORS.white} />
             </View>
+          </TouchableOpacity>
           </View>
         </View>
       </TouchableHighlight>
