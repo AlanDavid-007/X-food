@@ -4,10 +4,29 @@ import {ScrollView} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import {SecondaryButton} from '../components/Button';
+import AddWishes from './WishlistScreen';
+import AddCartItems from './CartScreen';
+import { v4 as uuidv4 } from 'uuid';
 
 const DetailsScreen = ({navigation, route}) => {
   const item = route.params;
-
+  
+  const Submit = () => {
+    AddWishes({
+      id: uuidv4(),
+      name: item.name,
+      image: item.image,
+    })
+  };
+  
+    const CartSubmit = () => {
+    AddCartItems({
+      id: uuidv4(),
+      name: item.name,
+      image: item.image,
+    })
+  };
+  
   return (
     <SafeAreaView style={{backgroundColor: COLORS.white}}>
       <View style={style.header}>
@@ -34,10 +53,12 @@ const DetailsScreen = ({navigation, route}) => {
               style={{fontSize: 25, fontWeight: 'bold', color: COLORS.white}}>
               {item.name}
             </Text>
+        <TouchableOpacity onPress={() => Submit()}>
             <View style={style.iconContainer}>
               <Icon name="favorite-border" color={COLORS.primary} size={25} />
             </View>
           </View>
+        </TouchableOpacity>
           <Text style={style.detailsText}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
@@ -45,9 +66,11 @@ const DetailsScreen = ({navigation, route}) => {
             and scrambled it to make a type specimen book. It has survived not
             only five centuries.
           </Text>
+        <TouchableOpacity onPress={() => CartSubmit()}>
           <View style={{marginTop: 40, marginBottom: 40}}>
             <SecondaryButton title="Add To Cart" />
           </View>
+        </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
