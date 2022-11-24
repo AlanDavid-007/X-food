@@ -17,20 +17,31 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import categories from '../../consts/categories';
+import AddWishes from './WishlistScreen';
 import foods from '../../consts/foods';
 const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
+import { v4 as uuidv4 } from 'uuid';
 
 const HomeScreen = ({navigation}) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
 
+  const Submit = () => {
+    AddWishes({
+      id: uuidv4(),
+      name: categoriesValue.name,
+      image: categoriesValue.image,
+    })
+  };
+ const [categoriesValue, setCategoriesValue] = useState("");
   const ListCategories = () => {
     return (
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={style.categoriesListContainer}>
-        {categories.map((category, index) => (
+        { setCategoriesValue = categories};
+        {categoriesValue.map((category, index) => (
           <TouchableOpacity
             key={index}
             activeOpacity={0.8}
@@ -43,7 +54,7 @@ const HomeScreen = ({navigation}) => {
                     : COLORS.secondary,
                 ...style.categoryBtn,
               }}>
-              <View style={style.categoryBtnImgCon}>
+              <View style={style.categoryBtnImgCon} onPress={() => Submit}>
                 <Image
                   source={category.image}
                   style={{height: 35, width: 35, resizeMode: 'cover'}}

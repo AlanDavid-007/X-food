@@ -33,7 +33,7 @@ const WishlistScreen = ({navigation}) => {
   const [addWish, setAddWish] = useState([wishlist]);
   
   
-    const AddWishes = (wish) {
+    const AddWishes = (wish) => {
     const newWishes = [...wishlist, wish];
     
     AsyncStorage.setItem("storedWishes", JSON.stringify(newWishes)).then(() => {
@@ -47,7 +47,7 @@ const WishlistScreen = ({navigation}) => {
   const loadWishes = () => {
       AsyncStorage.getItem("storedWishes").then(data => {
         if (data !== null) {
-          setWishes(JSON.parse(data))
+          setAddWish(JSON.parse(data))
         }
       }).catch((error) => console.log(error));
     }
@@ -254,5 +254,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default AddWishes;
-export default WishListScreen;
+export default WishlistScreen;
