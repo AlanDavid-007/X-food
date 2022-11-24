@@ -17,7 +17,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import categories from '../../consts/categories';
-import AddWishes from './WishlistScreen';
+import AddCartItems from './CartScreen';
 import foods from '../../consts/foods';
 const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
@@ -27,7 +27,7 @@ const HomeScreen = ({navigation}) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
 
   const Submit = () => {
-    AddWishes({
+    AddCartItems({
       id: uuidv4(),
       name: categoriesValue.name,
       image: categoriesValue.image,
@@ -54,12 +54,14 @@ const HomeScreen = ({navigation}) => {
                     : COLORS.secondary,
                 ...style.categoryBtn,
               }}>
-              <View style={style.categoryBtnImgCon} onPress={() => Submit}>
+             <TouchableOpacity onPress={() => Submit()}>
+              <View style={style.categoryBtnImgCon}>
                 <Image
                   source={category.image}
                   style={{height: 35, width: 35, resizeMode: 'cover'}}
                 />
               </View>
+             </TouchableOpacity>
               <Text
                 style={{
                   fontSize: 15,
