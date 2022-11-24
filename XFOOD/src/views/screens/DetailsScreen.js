@@ -16,15 +16,19 @@ const DetailsScreen = ({navigation, route}) => {
       id: uuidv4(),
       name: item.name,
       image: item.image,
+      ingredients: item.ingredients,
+      price: item.price,
     })
   };
   
     const CartSubmit = () => {
-    AddCartItems({
-      id: uuidv4(),
-      name: item.name,
-      image: item.image,
-    })
+     AddCartItems({
+          id: uuidv4(),
+          name: item.name,
+          image: item.image,
+          ingredients: item.ingredients,
+          price: item.price,
+        })
   };
   
   return (
