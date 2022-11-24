@@ -5,12 +5,53 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import foods from '../../consts/foods';
 import {PrimaryButton} from '../components/Button';
+import cartlist from '../../consts/cartList';
 
+
+//Async storage
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
+
+ const [ready, setReady] = useState(false);
+  const [addCartList, setAddCartList] = useState([cartlist]);
+  
+  
+    const AddCartItems = (cart) => {
+    const newCartItem = [...cartlist, cart];
+    
+    AsyncStorage.setItem("storedCartList", JSON.stringify(newCartItem)).then(() => {
+            setAddCartList(newCartItem);
+            setModalVisible(false);
+        }).catch((error) => console.log(error));
+            console.log(setAddCartList(newCartItem));
+  
+  };
+  
+  const loadWishes = () => {
+      AsyncStorage.getItem("storedCartList").then(data => {
+        if (data !== null) {
+          setAddCartList(JSON.parse(data))
+        }
+      }).catch((error) => console.log(error));
+    }
+
+    if (!ready) {
+      return (
+        <AppLoading
+          startAsync={loadCartList}
+          onFinish={() => setReady(true)}
+          onError={console.warn}
+        />
+      )
+    }
+
+//     {item}
 const CartScreen = ({navigation}) => {
-  const CartCard = ({item}) => {
+  const CartCard = () => {
     return (
-      <View style={style.cartCard}>
-        <Image source={item.image} style={{height: 80, width: 80}} />
+        {cartlist.map((cart, index) => (
+      <View style={style.cartCard} key={index}>
+        <Image source={cart.image} style={{height: 80, width: 80}} />
         <View
           style={{
             height: 100,
@@ -18,11 +59,11 @@ const CartScreen = ({navigation}) => {
             paddingVertical: 20,
             flex: 1,
           }}>
-          <Text style={{fontWeight: 'bold', fontSize: 16}}>{item.name}</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 16}}>{cart.name}</Text>
           <Text style={{fontSize: 13, color: COLORS.grey}}>
-            {item.ingredients}
+            {cart.ingredients}
           </Text>
-          <Text style={{fontSize: 17, fontWeight: 'bold'}}>${item.price}</Text>
+          <Text style={{fontSize: 17, fontWeight: 'bold'}}>${cart.price}</Text>
         </View>
         <View style={{marginRight: 20, alignItems: 'center'}}>
           <Text style={{fontWeight: 'bold', fontSize: 18}}>3</Text>
