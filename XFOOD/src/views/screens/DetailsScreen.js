@@ -28,6 +28,7 @@ const DetailsScreen = ({navigation, route}) => {
           image: item.image,
           ingredients: item.ingredients,
           price: item.price,
+          quantity: 1,
         })
   };
   
