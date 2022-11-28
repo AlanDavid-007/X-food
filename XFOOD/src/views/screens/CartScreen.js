@@ -6,7 +6,7 @@ import COLORS from '../../consts/colors';
 import foods from '../../consts/foods';
 import {PrimaryButton} from '../components/Button';
 import cartlist from '../../consts/cartList';
-
+import { v4 as uuidv4 } from 'uuid';
 
 //Async storage
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -21,13 +21,12 @@ import AppLoading from 'expo-app-loading';
     
     AsyncStorage.setItem("storedCartList", JSON.stringify(newCartItem)).then(() => {
             setAddCartList(newCartItem);
-            setModalVisible(false);
         }).catch((error) => console.log(error));
             console.log(setAddCartList(newCartItem));
   
   };
   
-  const loadWishes = () => {
+  const loadCartlist = ({item}) => {
       AsyncStorage.getItem("storedCartList").then(data => {
         if (data !== null) {
           setAddCartList(JSON.parse(data))
@@ -46,6 +45,53 @@ import AppLoading from 'expo-app-loading';
     }
 
 //     {item}
+    
+    let [count, setCount] = useState(1);
+    let min = 0, /// min number
+    let max = 30; /// max number
+
+  function incrementCount() {
+    count = count + 1;
+   if(count >= 1 && count < 100) {
+    setCount(count);
+   }
+  }
+  function decrementCount() {
+    count = count - 1;
+    if(count > 1 && count < 100) {
+    setCount(count);
+   } 
+  }
+
+//Editing a todo
+    const [itemToBeEdited, setItemToBeEdited] = useState(null);
+
+    const handleTriggerEdit = (item) => {
+        setItemToBeEdited(item);
+    }
+    const handleEditItem = (editedItem) => {
+        const newItems = [...cartlist];
+        const itemIndex = cartlist.findIndex((item) => item.id === editedItem.id);
+        newItems.splice(itemIndex, 1, editedItem);
+        AsyncStorage.setItem("storedCartList", JSON.stringify( newItems)).then(() => {
+            setAddCartList(newItems);
+            setItemToBeEdited(null);
+            // console.log(todoIndex);
+        }).catch((error) => console.log(error));
+    }
+    const editItem = () => {
+     handleEditItem({
+          id: uuidv4(),
+          name: item.name,
+          image: item.image,
+          ingredients: item.ingredients,
+          price: item.price,
+          quantity: count,
+     });
+    }
+    const checkoutBtn = () => {
+     alert("Obrigado por comprar conosco!");
+    }
 const CartScreen = ({navigation}) => {
   const CartCard = () => {
     return (
@@ -66,12 +112,15 @@ const CartScreen = ({navigation}) => {
           <Text style={{fontSize: 17, fontWeight: 'bold'}}>${cart.price}</Text>
         </View>
         <View style={{marginRight: 20, alignItems: 'center'}}>
-          <Text style={{fontWeight: 'bold', fontSize: 18}}>3</Text>
-          <View style={style.actionBtn}>
+//           <Text style={{fontWeight: 'bold', fontSize: 18}}>3</Text>
+            <span>{count}</span>
+        <button style={style.actionBtn} onClick={() => decrementCount(), editItem()}>
             <Icon name="remove" size={25} color={COLORS.white} />
-            <Icon name="add" size={25} color={COLORS.white} />
-          </View>
-        </View>
+          </button>
+        <button style={style.actionBtn} onClick={() => incrementCount(), editItem()}>
+        <Icon name="add" size={25} color={COLORS.white} />
+         </button>
+         </View>
       </View>
     );
   };
@@ -101,7 +150,7 @@ const CartScreen = ({navigation}) => {
               <Text style={{fontSize: 18, fontWeight: 'bold'}}>$50</Text>
             </View>
             <View style={{marginHorizontal: 30}}>
-              <PrimaryButton title="CHECKOUT" />
+              <PrimaryButton title="CHECKOUT" onClick={checkoutBtn}/>
             </View>
           </View>
         )}
