@@ -1,18 +1,25 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, View, Text, Image} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import foods from '../../consts/foods';
 import {PrimaryButton} from '../components/Button';
 import cartlist from '../../consts/cartList';
 import { v4 as uuidv4 } from 'uuid';
-
+import {
+  FlatList,
+  ScrollView,
+  TextInput,
+  TouchableHighlight,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 //Async storage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 
- const [ready, setReady] = useState(false);
+const CartScreen = ({navigation, item}) => {
+
+  const [ready, setReady] = useState(false);
   const [addCartList, setAddCartList] = useState([cartlist]);
   
   
@@ -32,22 +39,22 @@ import AppLoading from 'expo-app-loading';
           setAddCartList(JSON.parse(data))
         }
       }).catch((error) => console.log(error));
-    }
+    };
 
     if (!ready) {
       return (
         <AppLoading
-          startAsync={loadCartList}
+          startAsync={loadCartlist}
           onFinish={() => setReady(true)}
           onError={console.warn}
         />
       )
-    }
+    };
 
 //     {item}
     
     let [count, setCount] = useState(1);
-    let min = 0, /// min number
+    let min = 0; /// min number
     let max = 30; /// max number
 
   function incrementCount() {
@@ -55,20 +62,22 @@ import AppLoading from 'expo-app-loading';
    if(count >= 1 && count < 100) {
     setCount(count);
    }
-  }
+  };
+
   function decrementCount() {
     count = count - 1;
     if(count > 1 && count < 100) {
     setCount(count);
    } 
-  }
+  };
 
 //Editing a todo
     const [itemToBeEdited, setItemToBeEdited] = useState(null);
 
     const handleTriggerEdit = (item) => {
         setItemToBeEdited(item);
-    }
+    };
+
     const handleEditItem = (editedItem) => {
         const newItems = [...cartlist];
         const itemIndex = cartlist.findIndex((item) => item.id === editedItem.id);
@@ -78,7 +87,8 @@ import AppLoading from 'expo-app-loading';
             setItemToBeEdited(null);
             // console.log(todoIndex);
         }).catch((error) => console.log(error));
-    }
+    };
+
     const editItem = () => {
      handleEditItem({
           id: uuidv4(),
@@ -88,13 +98,15 @@ import AppLoading from 'expo-app-loading';
           price: item.price,
           quantity: count,
      });
-    }
+    };
+
     const checkoutBtn = () => {
      alert("Obrigado por comprar conosco!");
-    }
-const CartScreen = ({navigation}) => {
+    };
+
   const CartCard = () => {
     return (
+      <ScrollView>
         {cartlist.map((cart, index) => (
       <View style={style.cartCard} key={index}>
         <Image source={cart.image} style={{height: 80, width: 80}} />
@@ -112,18 +124,19 @@ const CartScreen = ({navigation}) => {
           <Text style={{fontSize: 17, fontWeight: 'bold'}}>${cart.price}</Text>
         </View>
         <View style={{marginRight: 20, alignItems: 'center'}}>
-//           <Text style={{fontWeight: 'bold', fontSize: 18}}>3</Text>
+{/* //           <Text style={{fontWeight: 'bold', fontSize: 18}}>3</Text> */}
             <span>{count}</span>
-        <button style={style.actionBtn} onClick={() => decrementCount(), editItem()}>
+        <button style={style.actionBtn} onPress={() => {decrementCount(), editItem()}}>
             <Icon name="remove" size={25} color={COLORS.white} />
           </button>
-        <button style={style.actionBtn} onClick={() => incrementCount(), editItem()}>
+        <button style={style.actionBtn} onPress={() => {incrementCount(), editItem()}}>
         <Icon name="add" size={25} color={COLORS.white} />
          </button>
          </View>
       </View>
-    );
-  };
+    ))}
+    </ScrollView>
+    )};
   return (
     <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
       <View style={style.header}>

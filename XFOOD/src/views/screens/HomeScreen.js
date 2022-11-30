@@ -108,7 +108,7 @@ const HomeScreen = ({navigation, item}) => {
             <Text style={{fontSize: 18, fontWeight: 'bold'}}>
               ${food.price}
             </Text>
-          <TouchableOpacity onPress={() => Submit()}
+          <TouchableOpacity onPress={() => Submit()}>
             <View style={style.addToCartBtn}>
               <Icon name="add" size={20} color={COLORS.white} />
             </View>

@@ -20,7 +20,6 @@ import wishlist from '../../consts/wishlist';
 import foods from '../../consts/foods';
 const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
-import wishlist from '../../consts/wishlist';
 
 //Async storage
 import AsyncStorage from '@react-native-async-storage/async-storage';

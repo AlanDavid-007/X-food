@@ -62,8 +62,8 @@ const DetailsScreen = ({navigation, route}) => {
             <View style={style.iconContainer}>
               <Icon name="favorite-border" color={COLORS.primary} size={25} />
             </View>
-          </View>
         </TouchableOpacity>
+        </View>
           <Text style={style.detailsText}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text

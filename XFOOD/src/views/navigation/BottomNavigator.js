@@ -6,7 +6,7 @@ import COLORS from '../../consts/colors';
 import {View} from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import CartScreen from '../screens/CartScreen';
-import WishListScreen from '../screens/WishListScreen';
+import WishListScreen from '../screens/WishlistScreen';
 import ComingSoonScreen from '../screens/ComingSoonScreen';
 
 const Tab = createBottomTabNavigator();
