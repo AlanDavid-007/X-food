@@ -116,7 +116,7 @@ const ComingSoonScreen = ({navigation}) => {
           </Text>
         </View>
         <Image
-          source={require('../../assets/person.png')}
+          source={require('../../assets/person.jpeg')}
           style={{height: 50, width: 50, borderRadius: 25}}
         />
       </View>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, View, Text, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';

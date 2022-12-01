@@ -7,12 +7,12 @@ import {PrimaryButton} from '../components/Button';
 const OnBoardScreen = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
-      <View style={{height: 400}}>
+      <View style={{height: 300}}>
         <Image
           style={{
             width: '100%',
             resizeMode: 'contain',
-            top: -150,
+            top: -200,
           }}
           source={require('../../assets/onboardImage.png')}
         />
@@ -24,10 +24,11 @@ const OnBoardScreen = ({navigation}) => {
           </Text>
           <Text
             style={{
-              marginTop: 20,
+              marginTop: 15,
               fontSize: 18,
               textAlign: 'center',
               color: COLORS.grey,
+              marginBottom: 20,
             }}>
             We help you to find best and delicious food
           </Text>
@@ -59,6 +60,7 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 20
   },
   currentIndicator: {
     height: 12,

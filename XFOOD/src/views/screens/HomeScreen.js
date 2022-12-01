@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -14,7 +14,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../../consts/colors';
 import categories from '../../consts/categories';
 import AddCartItems from './CartScreen';
@@ -22,18 +22,18 @@ import foods from '../../consts/foods';
 const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 import { v4 as uuidv4 } from 'uuid';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 const HomeScreen = ({navigation, item}) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
   
- const [categoriesValue, setCategoriesValue] = useState("");
+ const [categoriesValue, setCategoriesValue] = useState([categories]);
   const ListCategories = () => {
     return (
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={style.categoriesListContainer}>
-        { setCategoriesValue = categories};
         {categoriesValue.map((category, index) => (
           <TouchableOpacity
             key={index}
@@ -120,20 +120,21 @@ const HomeScreen = ({navigation, item}) => {
   };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
+            <ScrollView>
       <View style={style.header}>
         <View>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{fontSize: 28}}>Hello,</Text>
+            <Text style={{fontSize: 28}}>Olá,</Text>
             <Text style={{fontSize: 28, fontWeight: 'bold', marginLeft: 10}}>
-              Ariz
+              Alan
             </Text>
           </View>
           <Text style={{marginTop: 5, fontSize: 22, color: COLORS.grey}}>
-            What do you want today
+            O que deseja hoje?
           </Text>
         </View>
         <Image
-          source={require('../../assets/person.png')}
+          source={require('../../assets/person.jpeg')}
           style={{height: 50, width: 50, borderRadius: 25}}
         />
       </View>
@@ -146,12 +147,16 @@ const HomeScreen = ({navigation, item}) => {
         <View style={style.inputContainer}>
           <Icon name="search" size={28} />
           <TextInput
-            style={{flex: 1, fontSize: 18}}
-            placeholder="Search for food"
+            style={{flex: 1, fontSize: 13}}
+            placeholder="Procure sua comida aqui..."
           />
         </View>
         <View style={style.sortBtn}>
-          <Icon name="tune" size={28} color={COLORS.white} />
+        {/* <Icon
+   color={COLORS.white}
+   name={stroopwafel}
+   size={40}
+/> */}
         </View>
       </View>
       <View>
@@ -163,6 +168,7 @@ const HomeScreen = ({navigation, item}) => {
         data={foods}
         renderItem={({item}) => <Card food={item} />}
       />
+      </ScrollView>
     </SafeAreaView>
   );
 };
