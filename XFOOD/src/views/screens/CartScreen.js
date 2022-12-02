@@ -19,14 +19,13 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import HomeScreen from './HomeScreen.js';
+import _ from "lodash";
 
-const CartScreen = ({navigation, item}) => {
 
-  const [ready, setReady] = useState(false);
   const [addCartList, setAddCartList] = useState([cartlist]);
   
   
-    const AddCartItems = (cart) => {
+    export const AddCartItems = (cart) => {
       const newCartItem = [...cartlist, cart];
       
       AsyncStorage.setItem("storedCartList", JSON.stringify(newCartItem)).then(() => {
@@ -54,6 +53,62 @@ const CartScreen = ({navigation, item}) => {
       )
     };
 
+// //Editing a todo
+    const [itemToBeEdited, setItemToBeEdited] = useState(null);
+
+    const handleTriggerEdit = (item) => {
+        setItemToBeEdited(item);
+    };
+
+    const handleEditItem = (editedItem) => {
+        const newItems = [...cartlist];
+        const itemIndex = cartlist.findIndex((item) => item.id === editedItem.id);
+        newItems.splice(itemIndex, 1, editedItem);
+        AsyncStorage.setItem("storedCartList", JSON.stringify( newItems)).then(() => {
+            setAddCartList(newItems);
+            setItemToBeEdited(null);
+            // console.log(todoIndex);
+        }).catch((error) => console.log(error));
+    };
+
+    const editItem = () => {
+     handleEditItem({
+          id: uuidv4(),
+          name: item.name,
+          image: item.image,
+          ingredients: item.ingredients,
+          price: item.price,
+          quantity: count,
+     });
+    };
+
+// export const contains = ({ name, email }, query) => {
+//   const { first, last } = name;
+//   if (first.includes(query) || last.includes(query) || email.includes(query)) {
+//     return true;
+//   }
+
+//   return false;
+// };
+
+// export const getUsers = (limit = 20, query = "") => {
+//   return new Promise((resolve, reject) => {
+//     if (query.length === 0) {
+//       resolve(_.take(users, limit));
+//     } else {
+//       const formattedQuery = query.toLowerCase();
+//       const results = _.filter(users, user => {
+//         return contains(user, formattedQuery);
+//       });
+//       resolve(_.take(results, limit));
+//     }
+//   });
+// };
+
+const CartScreen = ({navigation, item}) => {
+
+  const [ready, setReady] = useState(false);
+
     {item}
     
     const count = 0;
@@ -73,36 +128,6 @@ const CartScreen = ({navigation, item}) => {
     count = countMinus;
    } 
   };
-
-// //Editing a todo
-//     const [itemToBeEdited, setItemToBeEdited] = useState(null);
-
-//     const handleTriggerEdit = (item) => {
-//         setItemToBeEdited(item);
-//     };
-
-//     const handleEditItem = (editedItem) => {
-//         const newItems = [...cartlist];
-//         const itemIndex = cartlist.findIndex((item) => item.id === editedItem.id);
-//         newItems.splice(itemIndex, 1, editedItem);
-//         AsyncStorage.setItem("storedCartList", JSON.stringify( newItems)).then(() => {
-//             setAddCartList(newItems);
-//             setItemToBeEdited(null);
-//             // console.log(todoIndex);
-//         }).catch((error) => console.log(error));
-//     };
-
-//     const editItem = () => {
-//      handleEditItem({
-//           id: uuidv4(),
-//           name: item.name,
-//           image: item.image,
-//           ingredients: item.ingredients,
-//           price: item.price,
-//           quantity: count,
-//      });
-//     };
-
     const checkoutBtn = () => {
      Alert.alert(
       "Mensagem",
