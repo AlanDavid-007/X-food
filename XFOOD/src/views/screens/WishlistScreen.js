@@ -28,14 +28,10 @@ import { AntDesign } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 
-const WishlistScreen = ({navigation}) => {
-  const [selectedWishIndex, setSelectedWishIndex] = React.useState(0);
-
-  const [ready, setReady] = useState(false);
-  const [addWish, setAddWish] = useState([wishlist]);
+const [addWish, setAddWish] = useState([wishlist]);
   
   
-    const AddWishes = (wish) => {
+    export const AddWishes = (wish) => {
     const newWishes = [...wishlist, wish];
     
     AsyncStorage.setItem("storedWishes", JSON.stringify(newWishes)).then(() => {
@@ -63,6 +59,11 @@ const WishlistScreen = ({navigation}) => {
         />
       )
     }
+    
+const WishlistScreen = ({navigation}) => {
+  const [selectedWishIndex, setSelectedWishIndex] = React.useState(0);
+
+  const [ready, setReady] = useState(false);
   // const ListWishes = () => {
   //   return (
   //     <ScrollView
