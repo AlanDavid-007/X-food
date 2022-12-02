@@ -20,53 +20,56 @@ import comingSoon from '../../consts/comingSoon';
 import foods from '../../consts/foods';
 const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
+import {Entypo} from "@expo/vector-icons";
+import { Fontisto } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons'; 
 
 const ComingSoonScreen = ({navigation}) => {
   const [selectedComingSoonIndex, setSelectedComingSoonIndex] = React.useState(0);
 
-  const ListComings = () => {
-    return (
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={style.categoriesListContainer}>
-        {comingSoon.map((coming, index) => (
-          <TouchableOpacity
-            key={index}
-            activeOpacity={0.8}
-            onPress={() => setSelectedComingSoonIndex(index)}>
-            <View
-              style={{
-                backgroundColor:
-                  selectedComingSoonIndex == index
-                    ? COLORS.primary
-                    : COLORS.secondary,
-                ...style.categoryBtn,
-              }}>
-              <View style={style.categoryBtnImgCon}>
-                <Image
-                  source={coming.image}
-                  style={{height: 35, width: 35, resizeMode: 'cover'}}
-                />
-              </View>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                  marginLeft: 10,
-                  color:
-                    selectedComingSoonIndex == index
-                      ? COLORS.white
-                      : COLORS.primary,
-                }}>
-                {coming.name}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    );
-  };
+  // const ListComings = () => {
+  //   return (
+  //     <ScrollView
+  //       horizontal
+  //       showsHorizontalScrollIndicator={false}
+  //       contentContainerStyle={style.categoriesListContainer}>
+  //       {comingSoon.map((coming, index) => (
+  //         <TouchableOpacity
+  //           key={index}
+  //           activeOpacity={0.8}
+  //           onPress={() => setSelectedComingSoonIndex(index)}>
+  //           <View
+  //             style={{
+  //               backgroundColor:
+  //                 selectedComingSoonIndex == index
+  //                   ? COLORS.primary
+  //                   : COLORS.secondary,
+  //               ...style.categoryBtn,
+  //             }}>
+  //             <View style={style.categoryBtnImgCon}>
+  //               <Image
+  //                 source={coming.image}
+  //                 style={{height: 35, width: 35, resizeMode: 'cover'}}
+  //               />
+  //             </View>
+  //             <Text
+  //               style={{
+  //                 fontSize: 15,
+  //                 fontWeight: 'bold',
+  //                 marginLeft: 10,
+  //                 color:
+  //                   selectedComingSoonIndex == index
+  //                     ? COLORS.white
+  //                     : COLORS.primary,
+  //               }}>
+  //               {coming.name}
+  //             </Text>
+  //           </View>
+  //         </TouchableOpacity>
+  //       ))}
+  //     </ScrollView>
+  //   );
+  // };
   const Card = ({food}) => {
     return (
       <TouchableHighlight
@@ -94,7 +97,7 @@ const ComingSoonScreen = ({navigation}) => {
               ${food.price}
             </Text>
             <View style={style.addToCartBtn}>
-              <Icon name="add" size={20} color={COLORS.white} />
+              <AntDesign name="plus" size={20} color={COLORS.white} />
             </View>
           </View>
         </View>
@@ -127,19 +130,19 @@ const ComingSoonScreen = ({navigation}) => {
           paddingHorizontal: 20,
         }}>
         <View style={style.inputContainer}>
-          <Icon name="search" size={28} />
+          <Fontisto name="search" size={28} />
           <TextInput
             style={{flex: 1, fontSize: 18}}
             placeholder="Search for food"
           />
         </View>
-        <View style={style.sortBtn}>
+        {/* <View style={style.sortBtn}>
           <Icon name="tune" size={28} color={COLORS.white} />
-        </View>
+        </View> */}
       </View>
-      <View>
-        <ListCategories />
-      </View>
+      {/* <View>
+        <ListComings />
+      </View> */}
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}

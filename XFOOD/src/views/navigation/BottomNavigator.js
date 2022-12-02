@@ -8,7 +8,10 @@ import HomeScreen from '../screens/HomeScreen';
 import CartScreen from '../screens/CartScreen';
 import WishListScreen from '../screens/WishlistScreen';
 import ComingSoonScreen from '../screens/ComingSoonScreen';
-
+import {Entypo} from "@expo/vector-icons";
+import { AntDesign } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
+import { Feather } from '@expo/vector-icons'; 
 const Tab = createBottomTabNavigator();
 
 const BottomNavigator = () => {
@@ -28,7 +31,7 @@ const BottomNavigator = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({color}) => (
-            <Icon name="home-filled" color={color} size={28} />
+            <Entypo name="home" color={color} size={28} />
           ),
         }}
       />
@@ -37,11 +40,11 @@ const BottomNavigator = () => {
         component={ComingSoonScreen}
         options={{
           tabBarIcon: ({color}) => (
-            <Icon name="local-mall" color={color} size={28} />
+            <Feather name="shopping-bag" size={24} color="black" />
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Search"
         component={HomeScreen}
         options={{
@@ -63,13 +66,13 @@ const BottomNavigator = () => {
             </View>
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Favorite"
         component={WishListScreen}
         options={{
           tabBarIcon: ({color}) => (
-            <Icon name="favorite" color={color} size={28} />
+            <MaterialIcons name="favorite" size={24} color="black" />
           ),
         }}
       />
@@ -78,7 +81,7 @@ const BottomNavigator = () => {
         component={CartScreen}
         options={{
           tabBarIcon: ({color}) => (
-            <Icon name="shopping-cart" color={color} size={28} />
+            <AntDesign name="shoppingcart" size={24} color="black" />
           ),
         }}
       />

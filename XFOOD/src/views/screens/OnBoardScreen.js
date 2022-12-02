@@ -12,7 +12,7 @@ const OnBoardScreen = ({navigation}) => {
           style={{
             width: '100%',
             resizeMode: 'contain',
-            top: -200,
+            top: -150,
           }}
           source={require('../../assets/onboardImage.png')}
         />
@@ -24,7 +24,7 @@ const OnBoardScreen = ({navigation}) => {
           </Text>
           <Text
             style={{
-              marginTop: 15,
+              marginTop: 30,
               fontSize: 18,
               textAlign: 'center',
               color: COLORS.grey,
@@ -53,6 +53,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 50,
     justifyContent: 'space-between',
     paddingBottom: 40,
+    marginTop: 100,
   },
   indicatorContainer: {
     height: 50,

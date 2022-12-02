@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, View, Text, Image} from 'react-native';
+import {SafeAreaView, StyleSheet, View, Text, Image, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import foods from '../../consts/foods';
 import {PrimaryButton} from '../components/Button';
 import cartlist from '../../consts/cartList';
 import { v4 as uuidv4 } from 'uuid';
+import {Entypo} from "@expo/vector-icons";
+import { AntDesign } from '@expo/vector-icons'; 
 import {
   FlatList,
   ScrollView,
@@ -16,6 +18,7 @@ import {
 //Async storage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
+import HomeScreen from './HomeScreen';
 
 const CartScreen = ({navigation, item}) => {
 
@@ -24,13 +27,13 @@ const CartScreen = ({navigation, item}) => {
   
   
     const AddCartItems = (cart) => {
-    const newCartItem = [...cartlist, cart];
+      const newCartItem = [...cartlist, cart];
+      
+      AsyncStorage.setItem("storedCartList", JSON.stringify(newCartItem)).then(() => {
+              setAddCartList(newCartItem);
+          }).catch((error) => console.log(error));
+              console.log(setAddCartList(newCartItem));
     
-    AsyncStorage.setItem("storedCartList", JSON.stringify(newCartItem)).then(() => {
-            setAddCartList(newCartItem);
-        }).catch((error) => console.log(error));
-            console.log(setAddCartList(newCartItem));
-  
   };
   
   const loadCartlist = ({item}) => {
@@ -51,61 +54,75 @@ const CartScreen = ({navigation, item}) => {
       )
     };
 
-//     {item}
+    {item}
     
-    let [count, setCount] = useState(1);
-    let min = 0; /// min number
-    let max = 30; /// max number
+    const count = 0;
+    const min = 0; /// min number
+    const max = 30; /// max number
 
   function incrementCount() {
-    count = count + 1;
+    countPlus = count + 1;
    if(count >= 1 && count < 100) {
-    setCount(count);
+    count = countPlus;
    }
   };
 
   function decrementCount() {
-    count = count - 1;
+    countMinus = count - 1;
     if(count > 1 && count < 100) {
-    setCount(count);
+    count = countMinus;
    } 
   };
 
-//Editing a todo
-    const [itemToBeEdited, setItemToBeEdited] = useState(null);
+// //Editing a todo
+//     const [itemToBeEdited, setItemToBeEdited] = useState(null);
 
-    const handleTriggerEdit = (item) => {
-        setItemToBeEdited(item);
-    };
+//     const handleTriggerEdit = (item) => {
+//         setItemToBeEdited(item);
+//     };
 
-    const handleEditItem = (editedItem) => {
-        const newItems = [...cartlist];
-        const itemIndex = cartlist.findIndex((item) => item.id === editedItem.id);
-        newItems.splice(itemIndex, 1, editedItem);
-        AsyncStorage.setItem("storedCartList", JSON.stringify( newItems)).then(() => {
-            setAddCartList(newItems);
-            setItemToBeEdited(null);
-            // console.log(todoIndex);
-        }).catch((error) => console.log(error));
-    };
+//     const handleEditItem = (editedItem) => {
+//         const newItems = [...cartlist];
+//         const itemIndex = cartlist.findIndex((item) => item.id === editedItem.id);
+//         newItems.splice(itemIndex, 1, editedItem);
+//         AsyncStorage.setItem("storedCartList", JSON.stringify( newItems)).then(() => {
+//             setAddCartList(newItems);
+//             setItemToBeEdited(null);
+//             // console.log(todoIndex);
+//         }).catch((error) => console.log(error));
+//     };
 
-    const editItem = () => {
-     handleEditItem({
-          id: uuidv4(),
-          name: item.name,
-          image: item.image,
-          ingredients: item.ingredients,
-          price: item.price,
-          quantity: count,
-     });
-    };
+//     const editItem = () => {
+//      handleEditItem({
+//           id: uuidv4(),
+//           name: item.name,
+//           image: item.image,
+//           ingredients: item.ingredients,
+//           price: item.price,
+//           quantity: count,
+//      });
+//     };
 
     const checkoutBtn = () => {
-     alert("Obrigado por comprar conosco!");
+     Alert.alert(
+      "Mensagem",
+      "Obrigado por comprar conosco!, próximas etapas estão vindo em breve!",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
     };
 
   const CartCard = () => {
     return (
+      <>
+      <HomeScreen AddCartItems={AddCartItems}/>
+      
       <ScrollView>
         {cartlist.map((cart, index) => (
       <View style={style.cartCard} key={index}>
@@ -125,23 +142,23 @@ const CartScreen = ({navigation, item}) => {
         </View>
         <View style={{marginRight: 20, alignItems: 'center'}}>
 {/* //           <Text style={{fontWeight: 'bold', fontSize: 18}}>3</Text> */}
-            <span>{count}</span>
-        <button style={style.actionBtn} onPress={() => {decrementCount(), editItem()}}>
-            <Icon name="remove" size={25} color={COLORS.white} />
-          </button>
-        <button style={style.actionBtn} onPress={() => {incrementCount(), editItem()}}>
-        <Icon name="add" size={25} color={COLORS.white} />
-         </button>
+            {/* <span>{count}</span> */}
+        <TouchableOpacity style={style.actionBtn} onPress={() => {decrementCount()}}>
+        <AntDesign name="minus" size={24} color="white" />
+          </TouchableOpacity>
+        <TouchableOpacity style={style.actionBtn} onPress={() => {incrementCount()}}>
+        <AntDesign name="plus" size={24} color="white" />
+         </TouchableOpacity>
          </View>
       </View>
     ))}
     </ScrollView>
-    )};
+    </>)};
   return (
     <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
       <View style={style.header}>
-        <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
-        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Cart</Text>
+        {/* <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} /> */}
+        {/* <Text style={{fontSize: 20, fontWeight: 'bold'}}>Cart</Text> */}
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -163,7 +180,7 @@ const CartScreen = ({navigation, item}) => {
               <Text style={{fontSize: 18, fontWeight: 'bold'}}>$50</Text>
             </View>
             <View style={{marginHorizontal: 30}}>
-              <PrimaryButton title="CHECKOUT" onClick={checkoutBtn}/>
+              <PrimaryButton title="CHECKOUT" onPress={checkoutBtn}/>
             </View>
           </View>
         )}
@@ -198,6 +215,7 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
+    marginTop: 5,
   },
 });
 

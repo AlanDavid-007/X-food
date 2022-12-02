@@ -1,41 +1,45 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, View, Text, Image} from 'react-native';
+import {SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import {SecondaryButton} from '../components/Button';
-import AddWishes from './WishlistScreen';
-import AddCartItems from './CartScreen';
+import {AddWishes} from './WishlistScreen';
+import {AddCartItems} from './CartScreen';
 import { v4 as uuidv4 } from 'uuid';
+import {Entypo} from "@expo/vector-icons";
+import { Fontisto } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
 
 const DetailsScreen = ({navigation, route}) => {
   const item = route.params;
   
   const Submit = () => {
     AddWishes({
-      id: uuidv4(),
-      name: item.name,
-      image: item.image,
-      ingredients: item.ingredients,
-      price: item.price,
+      "id": item.id,
+      "name": item.name,
+      "image": item.image,
+      "ingredients": item.ingredients,
+      "price": item.price,
     })
   };
   
     const CartSubmit = () => {
      AddCartItems({
-          id: uuidv4(),
-          name: item.name,
-          image: item.image,
-          ingredients: item.ingredients,
-          price: item.price,
-          quantity: 1,
+          "id": item.id,
+          "name": item.name,
+          "image": item.image,
+          "ingredients": item.ingredients,
+          "price": item.price,
+          "quantity": 1,
         })
   };
   
   return (
     <SafeAreaView style={{backgroundColor: COLORS.white}}>
       <View style={style.header}>
-        <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
+        <AntDesign name="arrowleft" size={28} onPress={navigation.goBack} />
         <Text style={{fontSize: 20, fontWeight: 'bold'}}>Details</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -60,7 +64,7 @@ const DetailsScreen = ({navigation, route}) => {
             </Text>
         <TouchableOpacity onPress={() => Submit()}>
             <View style={style.iconContainer}>
-              <Icon name="favorite-border" color={COLORS.primary} size={25} />
+            <MaterialIcons name="favorite" size={24} color=" " />
             </View>
         </TouchableOpacity>
         </View>

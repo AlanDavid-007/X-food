@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Alert,
 } from 'react-native';
 import {
   FlatList,
@@ -17,72 +18,84 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../../consts/colors';
 import categories from '../../consts/categories';
-import AddCartItems from './CartScreen';
+import {AddCartItems} from './CartScreen';
 import foods from '../../consts/foods';
 const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
+import {Entypo} from "@expo/vector-icons";
+import { Fontisto } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons'; 
+import filter from 'lodash.filter';
+import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
-const HomeScreen = ({navigation, item}) => {
+// Arrumar UUID para gerar id 
+  
+
+
+const HomeScreen = ({navigation, item, food}) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
   
  const [categoriesValue, setCategoriesValue] = useState([categories]);
-  const ListCategories = () => {
-    return (
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={style.categoriesListContainer}>
-        {categoriesValue.map((category, index) => (
-          <TouchableOpacity
-            key={index}
-            activeOpacity={0.8}
-            onPress={() => setSelectedCategoryIndex(index)}>
-            <View
-              style={{
-                backgroundColor:
-                  selectedCategoryIndex == index
-                    ? COLORS.primary
-                    : COLORS.secondary,
-                ...style.categoryBtn,
-              }}>
-             <TouchableOpacity>
-              <View style={style.categoryBtnImgCon}>
-                <Image
-                  source={category.image}
-                  style={{height: 35, width: 35, resizeMode: 'cover'}}
-                />
-              </View>
-             </TouchableOpacity>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                  marginLeft: 10,
-                  color:
-                    selectedCategoryIndex == index
-                      ? COLORS.white
-                      : COLORS.primary,
-                }}>
-                {category.name}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    );
-  };
+ const [query, setQuery] = useState("");
+const [fullData, setFullData] = useState([]);
+  // const ListCategories = () => {
+  //   return (
+  //     <ScrollView
+  //       horizontal
+  //       showsHorizontalScrollIndicator={false}
+  //       contentContainerStyle={style.categoriesListContainer}>
+  //       {categoriesValue.map((category, index) => (
+  //         <TouchableOpacity
+  //           key={index}
+  //           activeOpacity={0.8}
+  //           onPress={() => setSelectedCategoryIndex(index)}>
+  //           <View
+  //             style={{
+  //               backgroundColor:
+  //                 selectedCategoryIndex == index
+  //                   ? COLORS.primary
+  //                   : COLORS.secondary,
+  //               ...style.categoryBtn,
+  //             }}>
+  //            <TouchableOpacity>
+  //             <View style={style.categoryBtnImgCon}>
+  //               <Image
+  //                 source={category.image}
+  //                 style={{height: 35, width: 35, resizeMode: 'cover'}}
+  //               />
+  //             </View>
+  //            </TouchableOpacity>
+  //             <Text
+  //               style={{
+  //                 fontSize: 15,
+  //                 fontWeight: 'bold',
+  //                 marginLeft: 10,
+  //                 color:
+  //                   selectedCategoryIndex == index
+  //                     ? COLORS.white
+  //                     : COLORS.primary,
+  //               }}>
+  //               {category.name}
+  //             </Text>
+  //           </View>
+  //         </TouchableOpacity>
+  //       ))}
+  //     </ScrollView>
+  //   );
+  // };
   const Card = ({food}) => {
+
       const Submit = () => {
         AddCartItems({
-          id: uuidv4(),
-          name: food.name,
-          image: food.image,
-          ingredients: food.ingredients,
-          price: food.price,
+          "id": food.id,
+          "name": food.name,
+          "image": food.image,
+          "ingredients": food.ingredients,
+          "price": food.price,
         })
       };
+
     return (
       <TouchableHighlight
         underlayColor={COLORS.white}
@@ -108,9 +121,9 @@ const HomeScreen = ({navigation, item}) => {
             <Text style={{fontSize: 18, fontWeight: 'bold'}}>
               ${food.price}
             </Text>
-          <TouchableOpacity onPress={() => Submit()}>
+          <TouchableOpacity onPress={Submit}>
             <View style={style.addToCartBtn}>
-              <Icon name="add" size={20} color={COLORS.white} />
+              <Entypo name="plus" size={20} color={COLORS.white} />
             </View>
           </TouchableOpacity>
           </View>
@@ -118,6 +131,31 @@ const HomeScreen = ({navigation, item}) => {
       </TouchableHighlight>
     );
   };
+
+  // Arrumar metódo de verificação para filtrar lista
+  const handleSearch = text => {
+    const formattedQuery = text.toLowerCase();
+    const filteredData = filter(fullData, food => {
+      return contains(food, formattedQuery);
+    });
+    setQuery(text);
+    if (food.name == query) {
+      setFullData(filteredData);
+    }
+    // Alert.alert(
+    //   "Message",
+    //   query,
+    //   [
+    //     {
+    //       text: "Cancel",
+    //       onPress: () => console.log("Cancel Pressed"),
+    //       style: "cancel"
+    //     },
+    //     { text: "OK", onPress: () => console.log("OK Pressed") }
+    //   ]
+    // );
+  };
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
             <ScrollView>
@@ -145,23 +183,27 @@ const HomeScreen = ({navigation, item}) => {
           paddingHorizontal: 20,
         }}>
         <View style={style.inputContainer}>
-          <Icon name="search" size={28} />
+        <Fontisto name="search" size={24} color="black" />
           <TextInput
             style={{flex: 1, fontSize: 13}}
             placeholder="Procure sua comida aqui..."
+            value={query}
+            onChangeText={foodText => handleSearch(foodText)}
           />
         </View>
-        <View style={style.sortBtn}>
-        {/* <Icon
+        {/* <View style={style.sortBtn}>
+         <Entypo
    color={COLORS.white}
-   name={stroopwafel}
+   name="menuunfold"
    size={40}
-/> */}
-        </View>
+/> 
+        </View> */}
       </View>
-      <View>
+      {/* <View>
         <ListCategories />
-      </View>
+      </View> */}
+      
+      {/* Trocar data para trocar */}
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}
@@ -188,6 +230,7 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.light,
     alignItems: 'center',
     paddingHorizontal: 20,
+    marginBottom: 30,
   },
   sortBtn: {
     width: 50,
