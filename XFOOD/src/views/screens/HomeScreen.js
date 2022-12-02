@@ -18,7 +18,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../../consts/colors';
 import categories from '../../consts/categories';
-import {AddCartItems} from './CartScreen';
+import {AddCartItems} from './CartScreen.js';
 import foods from '../../consts/foods';
 const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
