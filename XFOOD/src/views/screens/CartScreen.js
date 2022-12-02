@@ -18,7 +18,7 @@ import {
 //Async storage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
-import HomeScreen from './HomeScreen';
+import HomeScreen from './HomeScreen.js';
 
 const CartScreen = ({navigation, item}) => {
 
