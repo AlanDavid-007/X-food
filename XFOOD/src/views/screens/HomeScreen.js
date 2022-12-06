@@ -18,7 +18,6 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../../consts/colors';
 import categories from '../../consts/categories';
-import {AddCartItems} from './CartScreen.js';
 import foods from '../../consts/foods';
 const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
@@ -112,13 +111,25 @@ const [fullData, setFullData] = useState([]);
   const Card = ({food, AddCartItems}) => {
 
       const Submit = () => {
-        AddCartItems({
-          "id": food.id,
-          "name": food.name,
-          "image": food.image,
-          "ingredients": food.ingredients,
-          "price": food.price,
-        })
+        // AddCartItems({
+        //   "id": food.id,
+        //   "name": food.name,
+        //   "image": food.image,
+        //   "ingredients": food.ingredients,
+        //   "price": food.price,
+        // })
+        Alert.alert(
+          "Message",
+          "Olá, esta função estará disponível em Breve, aguarde as proxímas atualizações!",
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel"
+            },
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+          ]
+        );
       };
 
     return (
@@ -159,26 +170,25 @@ const [fullData, setFullData] = useState([]);
 
   // Arrumar metódo de verificação para filtrar lista
   const handleSearch = text => {
-    const formattedQuery = text.toLowerCase();
-    const filteredData = filter(fullData, food => {
-      return contains(food, formattedQuery);
-    });
-    setQuery(text);
-    if (food.name == query) {
-      setFullData(filteredData);
-    }
-    // Alert.alert(
-    //   "Message",
-    //   query,
-    //   [
-    //     {
-    //       text: "Cancel",
-    //       onPress: () => console.log("Cancel Pressed"),
-    //       style: "cancel"
-    //     },
-    //     { text: "OK", onPress: () => console.log("OK Pressed") }
-    //   ]
-    // );
+    // const formattedQuery = text.toLowerCase();
+    // const filteredData = filter(fullData, food => {
+    //   return contains(food, formattedQuery);
+    // });
+    // setQuery(text);
+    // if (food.name == query) {
+    //   setFullData(filteredData);
+    Alert.alert(
+      "Message",
+      "Essa funcionalidade está em desenvolvimento",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
   };
 
   return (

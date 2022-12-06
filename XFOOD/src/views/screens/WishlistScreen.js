@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Alert,
 } from 'react-native';
 import {
   FlatList,
@@ -28,20 +29,11 @@ import { AntDesign } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 
-const [addWish, setAddWish] = useState([wishlist]);
-  
-  
-    export const AddWishes = (wish) => {
-    const newWishes = [...wishlist, wish];
     
-    AsyncStorage.setItem("storedWishes", JSON.stringify(newWishes)).then(() => {
-            setAddWish(newWishes);
-            setModalVisible(false);
-        }).catch((error) => console.log(error));
-            console.log(setAddWish(newWishes));
-  
-  };
-  
+const WishlistScreen = ({navigation}) => {
+  const [ready, setReady] = useState(false);
+  const [query, setQuery] = useState("");
+  const [fullData, setFullData] = useState([]);
   const loadWishes = () => {
       AsyncStorage.getItem("storedWishes").then(data => {
         if (data !== null) {
@@ -59,11 +51,7 @@ const [addWish, setAddWish] = useState([wishlist]);
         />
       )
     }
-    
-const WishlistScreen = ({navigation}) => {
-  const [selectedWishIndex, setSelectedWishIndex] = React.useState(0);
-
-  const [ready, setReady] = useState(false);
+  // const [selectedWishIndex, setSelectedWishIndex] = React.useState(0);
   // const ListWishes = () => {
   //   return (
   //     <ScrollView
@@ -107,7 +95,30 @@ const WishlistScreen = ({navigation}) => {
   //     </ScrollView>
   //   );
   // };
+  
   const Card = ({food}) => {
+    const Submit = () => {
+      // AddCartItems({
+      //   "id": food.id,
+      //   "name": food.name,
+      //   "image": food.image,
+      //   "ingredients": food.ingredients,
+      //   "price": food.price,
+      // })
+      Alert.alert(
+        "Message",
+        "Olá, esta função estará disponível em Breve, aguarde as proxímas atualizações!",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+    };
+
     return (
       <TouchableHighlight
         underlayColor={COLORS.white}
@@ -133,26 +144,50 @@ const WishlistScreen = ({navigation}) => {
             <Text style={{fontSize: 18, fontWeight: 'bold'}}>
               ${food.price}
             </Text>
+            <TouchableOpacity onPress={Submit}>
             <View style={style.addToCartBtn}>
-              <AntDesign name="plus" size={20} color={COLORS.white} />
+              <Entypo name="plus" size={20} color={COLORS.white} />
             </View>
+          </TouchableOpacity>
           </View>
         </View>
       </TouchableHighlight>
     );
   };
+    // Arrumar metódo de verificação para filtrar lista
+    const handleSearch = text => {
+      // const formattedQuery = text.toLowerCase();
+      // const filteredData = filter(fullData, food => {
+      //   return contains(food, formattedQuery);
+      // });
+      // setQuery(text);
+      // if (food.name == query) {
+      //   setFullData(filteredData);
+      Alert.alert(
+        "Message",
+        "Essa funcionalidade está em desenvolvimento",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+    };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <View style={style.header}>
         <View>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{fontSize: 28}}>Hello,</Text>
+            <Text style={{fontSize: 28}}>Olá,</Text>
             <Text style={{fontSize: 28, fontWeight: 'bold', marginLeft: 10}}>
               Alan
             </Text>
           </View>
           <Text style={{marginTop: 5, fontSize: 22, color: COLORS.grey}}>
-            What do you want today
+            O que deseja hoje?
           </Text>
         </View>
         <Image
@@ -169,8 +204,10 @@ const WishlistScreen = ({navigation}) => {
         <View style={style.inputContainer}>
           <Fontisto name="search" size={28} />
           <TextInput
-            style={{flex: 1, fontSize: 18}}
-            placeholder="Search for food"
+            style={{flex: 1, fontSize: 13}}
+            placeholder="Procure sua comida aqui..."
+            value={query}
+            onChangeText={foodText => handleSearch(foodText)}
           />
         </View>
         {/* <View style={style.sortBtn}>

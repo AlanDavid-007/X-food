@@ -21,71 +21,28 @@ import AppLoading from 'expo-app-loading';
 import HomeScreen from './HomeScreen.js';
 import _ from "lodash";
 
+const CartScreen = ({navigation, item}) => {
+//   const [ready, setReady] = useState(false);
 
-  const [addCartList, setAddCartList] = useState([cartlist]);
-  
-  
-    export const AddCartItems = (cart) => {
-      const newCartItem = [...cartlist, cart];
-      
-      AsyncStorage.setItem("storedCartList", JSON.stringify(newCartItem)).then(() => {
-              setAddCartList(newCartItem);
-          }).catch((error) => console.log(error));
-              console.log(setAddCartList(newCartItem));
-    
-  };
-  
-  const loadCartlist = ({item}) => {
-      AsyncStorage.getItem("storedCartList").then(data => {
-        if (data !== null) {
-          setAddCartList(JSON.parse(data))
-        }
-      }).catch((error) => console.log(error));
-    };
+// const loadCartlist = ({item}) => {
+//     AsyncStorage.getItem("storedCartList").then(data => {
+//       if (data !== null) {
+//         setAddCartList(JSON.parse(data))
+//       }
+//     }).catch((error) => console.log(error));
+//   };
 
-    if (!ready) {
-      return (
-        <AppLoading
-          startAsync={loadCartlist}
-          onFinish={() => setReady(true)}
-          onError={console.warn}
-        />
-      )
-    };
+//   if (!ready) {
+//     return (
+//       <AppLoading
+//         startAsync={loadCartlist}
+//         onFinish={() => setReady(true)}
+//         onError={console.warn}
+//       />
+//     )
+//   };
 
 // //Editing a todo
-    const [itemToBeEdited, setItemToBeEdited] = useState(null);
-
-    const handleTriggerEdit = (item) => {
-        setItemToBeEdited(item);
-    };
-
-    const handleEditItem = (editedItem) => {
-        const newItems = [...cartlist];
-        const itemIndex = cartlist.findIndex((item) => item.id === editedItem.id);
-        newItems.splice(itemIndex, 1, editedItem);
-        AsyncStorage.setItem("storedCartList", JSON.stringify( newItems)).then(() => {
-            setAddCartList(newItems);
-            setItemToBeEdited(null);
-            // console.log(todoIndex);
-        }).catch((error) => console.log(error));
-    };
-
-    const editItem = () => {
-     handleEditItem({
-          id: uuidv4(),
-          name: item.name,
-          image: item.image,
-          ingredients: item.ingredients,
-          price: item.price,
-          quantity: count,
-     });
-    };
-
-const CartScreen = ({navigation, item}) => {
-
-  const [ready, setReady] = useState(false);
-
     {item}
     
     const count = 0;
@@ -97,6 +54,18 @@ const CartScreen = ({navigation, item}) => {
    if(count >= 1 && count < 100) {
     count = countPlus;
    }
+   Alert.alert(
+    "Message",
+    "Olá, esta função estará disponível em Breve, aguarde as proxímas atualizações!",
+    [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ]
+  );
   };
 
   function decrementCount() {
@@ -104,11 +73,24 @@ const CartScreen = ({navigation, item}) => {
     if(count > 1 && count < 100) {
     count = countMinus;
    } 
+   Alert.alert(
+    "Message",
+    "Olá, esta função estará disponível em Breve, aguarde as proxímas atualizações!",
+    [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ]
+  );
   };
     const checkoutBtn = () => {
      Alert.alert(
       "Mensagem",
       "Obrigado por comprar conosco!, próximas etapas estão vindo em breve!",
+      console.log(cartlist),
       [
         {
           text: "Cancelar",
@@ -122,9 +104,6 @@ const CartScreen = ({navigation, item}) => {
 
   const CartCard = () => {
     return (
-      <>
-      <HomeScreen AddCartItems={AddCartItems}/>
-      
       <ScrollView>
         {cartlist.map((cart, index) => (
       <View style={style.cartCard} key={index}>
@@ -154,8 +133,7 @@ const CartScreen = ({navigation, item}) => {
          </View>
       </View>
     ))}
-    </ScrollView>
-    </>)};
+    </ScrollView>)};
   return (
     <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
       <View style={style.header}>
@@ -165,7 +143,7 @@ const CartScreen = ({navigation, item}) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 80}}
-        data={foods}
+        data={cartlist}
         renderItem={({item}) => <CartCard item={item} />}
         ListFooterComponentStyle={{paddingHorizontal: 20, marginTop: 20}}
         ListFooterComponent={() => (

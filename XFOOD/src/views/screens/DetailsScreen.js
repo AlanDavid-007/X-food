@@ -1,39 +1,114 @@
-import React from 'react';
-import {SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity, Alert} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import {SecondaryButton} from '../components/Button';
-import {AddWishes} from './WishlistScreen.js';
-import {AddCartItems} from './CartScreen.js';
+import cartlist from '../../consts/cartList';
+import wishlist from '../../consts/wishlist';
 import { v4 as uuidv4 } from 'uuid';
 import {Entypo} from "@expo/vector-icons";
 import { Fontisto } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
 
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const DetailsScreen = ({navigation, route}) => {
   const item = route.params;
+  const [cart, setCart] = useState([cartlist]);
+  const [itemToBeEdited, setItemToBeEdited] = useState(null);
+  const [addWish, setAddWish] = useState([wishlist]);
+  
+  const AddWishes = (wish) => {
+    const newWishes = [...wishlist, wish];
+    
+    // AsyncStorage.setItem("storedWishes", JSON.stringify(newWishes)).then(() => {
+            addWish.push(newWishes);
+        // }).catch((error) => console.log(error));
+            console.log(wishlist);
+  
+  };
+  const AddCartItems = (carts) => {
+    const newCartItem = [...cart, carts];
+    
+    // AsyncStorage.setItem("storedCartList", JSON.stringify(newCartItem)).then(() => {
+            setCart(newCartItem);
+
+        // }).catch((error) => console.log(error));
+            console.log(setCart(newCartItem));
+  
+};
+const handleTriggerEdit = (item) => {
+  setItemToBeEdited(item);
+};
+
+const handleEditItem = (editedItem) => {
+  const newItems = [...addCartList];
+  const itemIndex = addCartList.findIndex((item) => item.id === editedItem.id);
+  newItems.splice(itemIndex, 1, editedItem);
+  // AsyncStorage.setItem("storedCartList", JSON.stringify( newItems)).then(() => {
+      setAddCartList(newItems);
+      setItemToBeEdited(null);
+      // console.log(todoIndex);
+  // }).catch((error) => console.log(error));
+};
+
+const editItem = () => {
+handleEditItem({
+    id: uuidv4(),
+    name: item.name,
+    image: item.image,
+    ingredients: item.ingredients,
+    price: item.price,
+    quantity: count,
+});
+};
   
   const Submit = () => {
-    AddWishes({
-      "id": item.id,
-      "name": item.name,
-      "image": item.image,
-      "ingredients": item.ingredients,
-      "price": item.price,
-    })
+    // AddWishes({
+    //   "id": item.id,
+    //   "name": item.name,
+    //   "image": item.image,
+    //   "ingredients": item.ingredients,
+    //   "price": item.price,
+    // })
+    Alert.alert(
+      "Message",
+      "Olá, esta função estará disponível em Breve, aguarde as proxímas atualizações!",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
   };
   
     const CartSubmit = () => {
-     AddCartItems({
-          "id": item.id,
-          "name": item.name,
-          "image": item.image,
-          "ingredients": item.ingredients,
-          "price": item.price,
-          "quantity": 1,
-        })
+    //  AddCartItems({
+    //       "id": item.id,
+    //       "name": item.name,
+    //       "image": item.image,
+    //       "ingredients": item.ingredients,
+    //       "price": item.price,
+    //       "quantity": 1,
+    //     })
+        // console.log(cartlist)
+    Alert.alert(
+      "Message",
+      "Olá, esta função estará disponível em Breve, aguarde as proxímas atualizações!",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
   };
   
   return (
@@ -75,9 +150,9 @@ const DetailsScreen = ({navigation, route}) => {
             and scrambled it to make a type specimen book. It has survived not
             only five centuries.
           </Text>
-        <TouchableOpacity onPress={() => CartSubmit()}>
-          <View style={{marginTop: 40, marginBottom: 40}}>
-            <SecondaryButton title="Add To Cart" />
+        <TouchableOpacity onPress={CartSubmit}>
+          <View style={{marginTop: 40, marginBottom: 40}} onPress={CartSubmit}>
+            <SecondaryButton onPress={CartSubmit} title="Add To Cart" />
           </View>
         </TouchableOpacity>
         </View>

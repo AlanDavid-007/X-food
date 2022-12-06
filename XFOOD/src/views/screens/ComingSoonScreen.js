@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Alert,
 } from 'react-native';
 import {
   FlatList,
@@ -26,7 +27,8 @@ import { AntDesign } from '@expo/vector-icons';
 
 const ComingSoonScreen = ({navigation}) => {
   const [selectedComingSoonIndex, setSelectedComingSoonIndex] = React.useState(0);
-
+  const [query, setQuery] = useState("");
+  const [fullData, setFullData] = useState([]);
   // const ListComings = () => {
   //   return (
   //     <ScrollView
@@ -81,10 +83,10 @@ const ComingSoonScreen = ({navigation}) => {
             <Image source={food.image} style={{height: 120, width: 120}} />
           </View>
           <View style={{marginHorizontal: 20}}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>{food.name}</Text>
-            <Text style={{fontSize: 14, color: COLORS.grey, marginTop: 2}}>
+            <Text style={{fontSize: 25, fontWeight: 'bold'}}>Em breve</Text>
+            {/* <Text style={{fontSize: 14, color: COLORS.grey, marginTop: 2}}>
               {food.ingredients}
-            </Text>
+            </Text> */}
           </View>
           <View
             style={{
@@ -93,29 +95,51 @@ const ComingSoonScreen = ({navigation}) => {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+            {/* <Text style={{fontSize: 18, fontWeight: 'bold'}}>
               ${food.price}
-            </Text>
-            <View style={style.addToCartBtn}>
+            </Text> */}
+            {/* <View style={style.addToCartBtn}>
               <AntDesign name="plus" size={20} color={COLORS.white} />
-            </View>
+            </View> */}
           </View>
         </View>
       </TouchableHighlight>
     );
   };
+    // Arrumar metódo de verificação para filtrar lista
+    const handleSearch = text => {
+      // const formattedQuery = text.toLowerCase();
+      // const filteredData = filter(fullData, food => {
+      //   return contains(food, formattedQuery);
+      // });
+      // setQuery(text);
+      // if (food.name == query) {
+      //   setFullData(filteredData);
+      Alert.alert(
+        "Message",
+        "Essa funcionalidade está em desenvolvimento",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+    };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <View style={style.header}>
         <View>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{fontSize: 28}}>Hello,</Text>
+            <Text style={{fontSize: 28}}>Olá,</Text>
             <Text style={{fontSize: 28, fontWeight: 'bold', marginLeft: 10}}>
               Alan
             </Text>
           </View>
           <Text style={{marginTop: 5, fontSize: 22, color: COLORS.grey}}>
-            What do you want today
+            O que deseja hoje?
           </Text>
         </View>
         <Image
@@ -132,8 +156,10 @@ const ComingSoonScreen = ({navigation}) => {
         <View style={style.inputContainer}>
           <Fontisto name="search" size={28} />
           <TextInput
-            style={{flex: 1, fontSize: 18}}
-            placeholder="Search for food"
+            style={{flex: 1, fontSize: 13}}
+            placeholder="Procure sua comida aqui..."
+            value={query}
+            onChangeText={foodText => handleSearch(foodText)}
           />
         </View>
         {/* <View style={style.sortBtn}>

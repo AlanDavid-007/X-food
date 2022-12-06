@@ -20,7 +20,7 @@ const OnBoardScreen = ({navigation}) => {
       <View style={style.textContainer}>
         <View>
           <Text style={{fontSize: 32, fontWeight: 'bold', textAlign: 'center'}}>
-            Delicious Food
+            Comida Deliciosa
           </Text>
           <Text
             style={{
@@ -30,7 +30,7 @@ const OnBoardScreen = ({navigation}) => {
               color: COLORS.grey,
               marginBottom: 20,
             }}>
-            We help you to find best and delicious food
+            Nós te ajudamos a encontrar uma comida incrível!
           </Text>
         </View>
         <View style={style.indicatorContainer}>
@@ -40,7 +40,7 @@ const OnBoardScreen = ({navigation}) => {
         </View>
         <PrimaryButton
           onPress={() => navigation.navigate('Home')}
-          title="Get Started"
+          title="Venha Conhecer!"
         />
       </View>
     </SafeAreaView>
