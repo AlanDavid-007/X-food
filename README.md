@@ -30,9 +30,9 @@ e-commerce - inspiration on Ifood
 
 ### Screenshot
 
-![First Slide](./XFOOD\src\assets/boas-vindas.png)
-![Second Slide](./XFOOD\src\assets/home.png)
-![Third Slide](./XFOOD\src\assets/details.png)
-![Fourth Slide](./XFOOD\src\assets/breve.png)
-![Fifth Slide](./XFOOD\src\assets/favoritos.png)
-![Sixth Slide](./XFOOD\src\assets/carrinho.png)
+![First Slide](./XFOOD/src/assets/boas-vindas.png)
+![Second Slide](./XFOOD/src/assets/home.png)
+![Third Slide](./XFOOD/src/assets/details.png)
+![Fourth Slide](./XFOOD/src/assets/breve.png)
+![Fifth Slide](./XFOOD/src/assets/favoritos.png)
+![Sixth Slide](./XFOOD/src/assets/carrinho.png)
