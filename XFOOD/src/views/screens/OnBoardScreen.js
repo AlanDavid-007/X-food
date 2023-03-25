@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, StyleSheet, View, Image} from 'react-native';
+import {Text, StyleSheet, View, Image, Button} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import COLORS from '../../consts/colors';
 import {PrimaryButton} from '../components/Button';
@@ -42,6 +42,7 @@ const OnBoardScreen = ({navigation}) => {
           onPress={() => navigation.navigate('Home')}
           title="Venha Conhecer!"
         />
+        <Button title="Receber novidades" onPress={ () => props.agendar()}></Button>
       </View>
     </SafeAreaView>
   );
