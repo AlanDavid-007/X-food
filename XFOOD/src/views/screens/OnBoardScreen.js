@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import COLORS from '../../consts/colors';
 import {PrimaryButton} from '../components/Button';
 
-const OnBoardScreen = ({navigation}) => {
+const OnBoardScreen = ({navigation}, props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <View style={{height: 300}}>

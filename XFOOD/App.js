@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
-import 'react-native-gesture-handler';
+// import 'react-native-gesture-handler';
 import {StatusBar, Text, ScrollView} from 'react-native';
 import COLORS from './src/consts/colors';
+
+// Notification Feature
+import {notificationManager} from './components/NotificationHandler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 // Screens
 import HomeScreen from './src/views/screens/HomeScreen';
@@ -11,27 +16,21 @@ import DetailsScreen from './src/views/screens/DetailsScreen';
 import BottomNavigator from './src/views/navigation/BottomNavigator';
 import OnBoardScreen from './src/views/screens/OnBoardScreen';
 
-// Notification Feature
-import {notificationManager} from './components/NotificationHandler';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
 const Stack = createStackNavigator();
 const notificador = notificationManager;
 
 // const App = () => {
 //   return (
-    // <ScrollView>
-    // <NavigationContainer>
-    //   <StatusBar backgroundColor={COLORS.white} barStyle="dark-content" />
-    //   <Stack.Navigator screenOptions={{headerShown: false}}>
-    //     <Stack.Screen name="BoardScreen" component={OnBoardScreen} />
-    //     <Stack.Screen name="Home" component={BottomNavigator} />
-    //     <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
-    // </ScrollView> 
-    // <Text>Olá</Text>
+//     <ScrollView>
+//     <NavigationContainer>
+//       <StatusBar backgroundColor={COLORS.white} barStyle="dark-content" />
+//       <Stack.Navigator screenOptions={{headerShown: false}}>
+//         <Stack.Screen name="BoardScreen" component={OnBoardScreen} />
+//         <Stack.Screen name="Home" component={BottomNavigator} />
+//         <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//     </ScrollView> 
 //   );
 // };
 
@@ -81,7 +80,7 @@ const notificador = notificationManager;
               <Stack.Screen name="HomeScreen">
                 {
                   ({navigation}) => {notificador.setNavegador(navigation); 
-                  return(<HomeScreen navegador={navigation} />)}
+                  return(<BottomNavigator navegador={navigation} />)}
                 }
               </Stack.Screen>
 
@@ -112,4 +111,5 @@ const notificador = notificationManager;
       )
     }
   }
+
 
