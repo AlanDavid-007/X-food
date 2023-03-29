@@ -39,7 +39,7 @@ const OnBoardScreen = ({navigation}, props) => {
           <View style={style.indicator} />
         </View>
         <PrimaryButton
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('HomeScreen')}
           title="Venha Conhecer!"
         />
         <Button title="Receber novidades" onPress={ () => props.agendar()}></Button>
