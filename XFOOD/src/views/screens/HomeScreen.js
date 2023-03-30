@@ -7,6 +7,7 @@ import {
   Text,
   View,
   Alert,
+  Button,
 } from 'react-native';
 import {
   FlatList,
@@ -33,7 +34,8 @@ import _ from "lodash";
   
 
 
-const HomeScreen = ({navigation, item, food}) => {
+const HomeScreen = ({navigation, route, item, food}) => {
+
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
   
  const [categoriesValue, setCategoriesValue] = useState([categories]);
@@ -157,7 +159,7 @@ const [fullData, setFullData] = useState([]);
             <Text style={{fontSize: 18, fontWeight: 'bold'}}>
               ${food.price}
             </Text>
-          <TouchableOpacity onPress={Submit}>
+          <TouchableOpacity onPress={ () => Submit()}>
             <View style={style.addToCartBtn}>
               <Entypo name="plus" size={20} color={COLORS.white} />
             </View>
@@ -191,6 +193,28 @@ const [fullData, setFullData] = useState([]);
     );
   };
 
+  const Submit = () => {
+    // AddCartItems({
+    //   "id": food.id,
+    //   "name": food.name,
+    //   "image": food.image,
+    //   "ingredients": food.ingredients,
+    //   "price": food.price,
+    // })
+    Alert.alert(
+      "Message",
+      "Olá, esta função estará disponível em Breve, aguarde as proxímas atualizações!",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
+  };
+  
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
             <ScrollView>
@@ -204,6 +228,7 @@ const [fullData, setFullData] = useState([]);
           </View>
           <Text style={{marginTop: 5, fontSize: 22, color: COLORS.grey}}>
             O que deseja hoje?
+            <Text></Text>
           </Text>
         </View>
         <Image
@@ -243,7 +268,9 @@ const [fullData, setFullData] = useState([]);
         showsVerticalScrollIndicator={false}
         numColumns={2}
         data={foods}
-        renderItem={({item}) => <Card food={item} />}
+        renderItem={({item}) => <Card food={item} 
+        onPress={Submit()}
+        />}
       />
       </ScrollView>
     </SafeAreaView>
@@ -319,3 +346,4 @@ const style = StyleSheet.create({
 });
 
 export default HomeScreen;
+

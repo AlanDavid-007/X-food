@@ -1,10 +1,44 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Text, StyleSheet, View, Image, Button} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import COLORS from '../../consts/colors';
 import {PrimaryButton} from '../components/Button';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from 'react-navigation';
+import { notificationManager } from '../../../components/NotificationHandler';
+const notificador = notificationManager;
+export default class OnBoardScreen extends Component { 
 
-const OnBoardScreen = ({navigation}, props) => {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+    notificador.configurar()
+    // notificador.criarCanal()
+    // notificador.agendarNotificacao()
+  }
+
+  disparar = () => {
+    notificador.showNotification(
+      1,
+      "Seja Bem Vindo!",
+      "Veja nosso Github para Mais!",
+      {}, // data
+      {} // options
+    )
+  }
+
+  cancelar = () => {
+    notificador.cancelAllLocalNotification()
+  }
+
+  agendar = () => {
+    notificador.agendarNotificacao()
+  }
+  
+  render() {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <View style={{height: 300}}>
@@ -38,15 +72,18 @@ const OnBoardScreen = ({navigation}, props) => {
           <View style={style.indicator} />
           <View style={style.indicator} />
         </View>
-        <PrimaryButton
-          onPress={() => navigation.navigate('HomeScreen')}
-          title="Venha Conhecer!"
+        <PrimaryButton 
+           onPress={ () =>
+            this.props.navigation.navigate('HomeScreen', {})}
+         title="Venha Conhecer!"
         />
-        <Button title="Receber novidades" onPress={ () => props.agendar()}></Button>
+        <Text></Text>
+        <PrimaryButton title="Receber novidades" onPress={ () => this.agendar()}></PrimaryButton>
       </View>
     </SafeAreaView>
-  );
+    );
 };
+}
 
 const style = StyleSheet.create({
   textContainer: {
@@ -80,4 +117,3 @@ const style = StyleSheet.create({
   },
 });
 
-export default OnBoardScreen;

@@ -39,7 +39,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
                 },
               onNotification: function (notification) {
                 console.log("[NotificationManager] onNotification:", notification);
-                navegador.navigate("HomeScreen")
+                // navegador.navigate("HomeScreen")
               },
               onAction: function(notification){
                   console.log("ACTION:", notification.action)
@@ -72,6 +72,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
               ...this.buildAndroidNotification(id, title, message, data, options),
 
               /* Propriedades do Android e iOS */
+              channelId: "channel-id",
               title: title || "",
               message: message || "",
               playSound: options.playSound || false,
@@ -87,7 +88,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
       agendarNotificacao() {
         PushNotification.localNotificationSchedule({
-          date: new Date(Date.now() + 300 * 1000), // in 300 secs
+          date: new Date(Date.now() + 30 * 1000), // in 300 secs
     
           /* Android Only Properties */
           channelId: 'channel-id',
