@@ -192,28 +192,6 @@ const [fullData, setFullData] = useState([]);
       ]
     );
   };
-
-  const Submit = () => {
-    // AddCartItems({
-    //   "id": food.id,
-    //   "name": food.name,
-    //   "image": food.image,
-    //   "ingredients": food.ingredients,
-    //   "price": food.price,
-    // })
-    Alert.alert(
-      "Message",
-      "Olá, esta função estará disponível em Breve, aguarde as proxímas atualizações!",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
-    );
-  };
   
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -269,7 +247,6 @@ const [fullData, setFullData] = useState([]);
         numColumns={2}
         data={foods}
         renderItem={({item}) => <Card food={item} 
-        onPress={Submit()}
         />}
       />
       </ScrollView>
